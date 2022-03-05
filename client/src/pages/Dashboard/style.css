@@ -1,0 +1,107 @@
+.grid-container{
+    background-color: #EAF4F4;
+    display: grid;
+    margin-top: 30px;
+    grid-template-columns: 50% 35%;
+    grid-gap: 20px;
+    justify-content: center;
+    grid-template-areas:
+    "header header"
+     "content sidebar"
+}
+
+.dash-header{
+    grid-area: header;
+    background-color:#EAF4F4;
+    color: #EAF4F4;
+}
+
+.dash-col-1{
+    grid-area: content;
+    max-height: 650px;
+}
+
+.welcome{
+    border:solid;
+    padding: 10px;
+    border-width: 4px;
+    border-color: #4b647c;
+    font-size: xx-large;
+    text-align:center;
+    background-color: #EAF4F4;
+    color: #080808;
+    box-shadow: 1px 4px 2px 4px #888888;
+}
+
+.floorplan{
+  height: auto;
+  width: 100%;
+  border: solid;
+  border-width: 4px;
+  border-color: #4b647c;
+  margin-top: 20px;
+  box-shadow: 1px 4px 2px 4px #888888;
+}
+
+.dashtable{
+grid-area: sidebar;
+border: solid;
+border-width: 4px;
+border-color: #4b647c;
+max-height: 650px;
+overflow-y: scroll;
+overflow-x: hidden;
+padding-top: none;
+display: flex;
+justify-content: center;
+box-shadow: 1px 4px 2px 4px #888888;
+}
+
+
+@media only screen and (max-width: 500px) {
+    .grid-container {
+      grid-template-columns: 1fr 3fr;
+      margin-top: 0px;
+      grid-gap: 7px;
+      grid-template-areas:
+        "header  header"
+        "content content"
+        "sidebar sidebar"
+        "footer footer";
+      }
+      .dash-header{
+        display: none;
+      }
+
+      .welcome h1{
+        font-size: smaller;
+      }
+
+      .floorplan{
+        display: none;
+        width: 90%;
+
+      }
+    }
+
+  @media only screen and (max-width: 1024px) {
+    .grid-container {
+      grid-template-columns: 1fr 4fr 1fr;
+      margin-top: 0px;
+      grid-gap: 7px;
+      grid-template-areas:
+        "header header  header"
+        "content content content"
+        "sidebar sidebar sidebar"
+        "footer footer footer"
+     }
+
+     .dash-header{
+      display: none;
+    }
+
+    .welcome h1{
+      font-size: smaller;
+    }
+
+    }

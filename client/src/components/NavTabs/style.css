@@ -1,0 +1,40 @@
+.center {
+    float: center;
+  }
+
+.text {
+    font-size: x-large;
+    color: black
+  }
+  
+  .nav-tabs {
+    background-color: #010107;
+  }
+  
+  .tab{
+    padding: 20px;
+    width: 33.3%;
+    text-align: center;
+    border: solid;
+    border-width: .1px;
+    border-bottom: none;
+    border-top-left-radius: 30%;
+    border-top-right-radius: 30%;
+    color: black;
+    background-color: #8aaabb;
+}
+
+.tab :hover{
+  text-decoration: none;
+}
+
+.active {
+    background-color: #EAF4F4;
+}
+
+
+@media only screen and (max-width: 700px) {
+  .no-display {
+    display: none;
+   }
+  }

@@ -1,0 +1,12 @@
+.border{
+    border: solid;
+    border-width: 5px;
+    border-color: white;
+}
+
+.btn.btn-success:active, .btn-success:focus {
+    background-color: #4b647c !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
