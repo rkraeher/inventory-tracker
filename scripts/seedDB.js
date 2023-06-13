@@ -1,10 +1,11 @@
 const mongoose = require("mongoose");
 const db = require("../models");
-
+require('dotenv').config();
 // This file empties the Posts collection and inserts the inventory below
 
-//mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/warehouse");
-mongoose.connect(process.env.MONGODB_URI || "some unsafe string");
+const url = process.env.DB_CONNECTION_URI;
+
+mongoose.connect(url);
 
 const items = [
     {
@@ -697,23 +698,23 @@ const binQuantities = [
 db.Item.remove({})
   .then(() => db.Item.collection.insertMany(items))
   .then(data => {
-    console.log(data.result.n + " items inserted!");
+    console.log(data.insertedCount + ' items inserted!');
 
     db.Warehouse.remove({})
       .then(() => db.Warehouse.collection.insertMany(warehouses))
       .then(data => {
-        console.log(data.result.n + " warehouses inserted!");
+        // console.log(data.result.n + " warehouses inserted!");
         
         db.Layout.remove({})
         .then(() => db.Layout.collection.insertMany(layouts))
           .then(data => {
-            console.log(data.result.n + " layouts inserted!");
+            // console.log(data.result.n + " layouts inserted!");
 
             
             db.BinQty.remove({})
             .then(() => db.BinQty.collection.insertMany(binQuantities))
             .then(data => {
-              console.log(data.result.n + " records inserted!");
+              // console.log(data.result.n + " records inserted!");
             process.exit(0);
 
             })
