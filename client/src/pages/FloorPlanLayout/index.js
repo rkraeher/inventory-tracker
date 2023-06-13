@@ -5,7 +5,6 @@ import API from "../../utils/API";
 import "./style.css";
 import FloorplanDiagram from "../../components/FloorplanDiagram";
 import FloorTable from '../../components/FloorTable';
-import { useAuth0 } from '@auth0/auth0-react';
 
 function FloorPlanLayout() {
     const [state, dispatch] = useStoreContext();
@@ -13,10 +12,9 @@ function FloorPlanLayout() {
     const [currentItem, setCurrentItem] = useState({
         currentItemName: "",
         currentItemNumber: "",
-        //currentMessage: `Click an item in the list to display quantities.`
     });
     const [currentMsg, setCurrentMsg] = useState(`Click an item in the list to display quantities.`);
-    const { isAuthenticated } = useAuth0();
+    
     var quantities = state.binQuantities;
 
     useEffect(() => {
@@ -34,6 +32,7 @@ function FloorPlanLayout() {
             })
             .catch(err => console.log(err));
     };
+    
 
     function handleClick(e) {
         e.preventDefault();
@@ -42,7 +41,6 @@ function FloorPlanLayout() {
         setCurrentItem({
             currentItemName: itemName,
             currentItemNumber: itemNumber,
-            //currentMessage: integrate currentMsg state here instead of as separate state. 
         });
         //Sets the message to show currently displaying item or "out of stock"
         hasQty(bins, currentItem);
@@ -106,9 +104,7 @@ function FloorPlanLayout() {
     }
 
     return (
-        isAuthenticated && (
             <div className="floorplan-container">
-
                 <header className="main-head">
                     <h2 id="message">{currentMsg}</h2>
                 </header>
@@ -120,10 +116,8 @@ function FloorPlanLayout() {
                 <div className="side">
                     <FloorTable handleClick={handleClick} />
                 </div>
-
             </div>
-        )
-    );
-}
+        );
+};
 
 export default FloorPlanLayout;

@@ -79,10 +79,6 @@ p {
     margin-top: 10px;
 }
 
-.sideLogout :hover{
-  cursor: pointer;
-}
-
 .head-logo{
     height: 45px;
     margin-left: 5px;
@@ -96,10 +92,6 @@ p {
 
 .nav-text:hover{
     text-decoration: none;
-}
-
-.sideLogout :hover{
-  cursor: pointer;
 }
 
 .title{
