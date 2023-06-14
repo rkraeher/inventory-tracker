@@ -22,9 +22,7 @@ mongoose.connect(url,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-  });
-
-app.listen(PORT, function () {
-  console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
-});
+  }, app.listen(PORT, function () {
+    console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
+  }));
 
