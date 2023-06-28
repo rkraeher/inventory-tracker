@@ -110,5 +110,9 @@ export default {
   },
   updateBinQuantity: function (id, postData) {
     return axios.put("/api/binQty/" + id, postData);
-  }
+  },
+  // Using this?
+  validateToken: function (postData) {
+    return axios.post("/api/recaptcha", postData);
+  },
 };
