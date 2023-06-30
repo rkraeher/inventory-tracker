@@ -15,45 +15,38 @@ function CreateItemForm() {
   const [showWarning, setShowWarning] = useState(false);
   const SITE_KEY = process.env.REACT_APP_RECAPTCHA_SITE_KEY || DEV_SITE_KEY;
 
-  const updateInventory = () => {
-    // use ref getValue?
+  const updateInventory = async () => {
     const itemNum = itemNumRef.current.value;
 
-    API.saveItem({
-      itemNumber: itemNumRef.current.value,
-      itemName: itemNameRef.current.value,
-      category: catRef.current.value,
-      qty: 0,
-    })
-      .then((result) => {
-        dispatch({
-          type: ADD_ITEM,
-          post: result.data,
-        });
-
-        //console.log("before insert bin qty");
-        API.saveBinQuantity({
-          warehouseCode: 'CA',
-          bin: 'NA',
-          itemNumber: itemNum,
-          binQty: 0,
-          modifiedDate: Date.now,
-        })
-          // .then(results => {
-          //   console.log(results);
-
-          // })
-          .catch((err) => console.log(err));
-      })
-      .catch((err) => {
-        const errString = err.toString();
-
-        if (errString.includes('500')) {
-          alert('Error occurred: ' + itemNum + ' already exists');
-        } else {
-          alert('Error occurred: ' + err.message);
-        }
+    try {
+      const result = await API.saveItem({
+        itemNumber: itemNum,
+        itemName: itemNameRef.current.value,
+        category: catRef.current.value,
+        qty: 0,
       });
+
+      dispatch({
+        type: ADD_ITEM,
+        post: result.data,
+      });
+
+      await API.saveBinQuantity({
+        warehouseCode: 'CA',
+        bin: 'NA',
+        itemNumber: itemNum,
+        binQty: 0,
+        modifiedDate: Date.now(),
+      });
+    } catch (err) {
+      const errString = err.toString();
+
+      if (errString.includes('500')) {
+        alert('Error occurred: ' + itemNum + ' already exists');
+      } else {
+        alert('Error occurred: ' + err.message);
+      }
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -69,10 +62,8 @@ function CreateItemForm() {
 
     if (recaptchaValidated) {
       setShowWarning(false);
-      updateInventory();
-    }
-
-    if (recaptchaValidated === false) {
+      await updateInventory();
+    } else {
       setShowWarning(true);
     }
 
