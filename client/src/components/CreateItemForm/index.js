@@ -4,7 +4,6 @@ import { ADD_ITEM, LOADING } from '../../utils/actions';
 import API from '../../utils/API';
 import './style.css';
 import ReCAPTCHA from 'react-google-recaptcha';
-import axios from 'axios';
 import { DEV_SITE_KEY } from '../../constants';
 
 function CreateItemForm() {
@@ -14,19 +13,6 @@ function CreateItemForm() {
   const catRef = useRef();
   const captchaRef = useRef(null);
   const SITE_KEY = process.env.REACT_APP_RECAPTCHA_SITE_KEY || DEV_SITE_KEY;
-
-  const validateToken = async (inputVal, token) => {
-    // put me into API
-    try {
-      const response = await axios.post('http://localhost:3001/api/recaptcha', {
-        inputVal,
-        token,
-      });
-      return response;
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   const updateInventory = () => {
     // use ref getValue?
@@ -71,23 +57,21 @@ function CreateItemForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch({ type: LOADING });
-    // var itemNum = itemNumRef.current.value;
 
-    // currently I don't actually use inputVal
-    const inputVal = await e.target[0].value;
+    dispatch({ type: LOADING });
+
     const token = captchaRef.current.getValue();
     captchaRef.current.reset();
 
-    const response = await validateToken(inputVal, token);
+    const response = await API.validateToken(token);
     const { recaptchaValidated } = response.data;
 
     if (recaptchaValidated) {
-      console.log('token is validated');
       updateInventory();
     }
 
     if (recaptchaValidated === false) {
+      // we need to display some warning in the UI
       console.log('token is NOT validated');
     }
 

@@ -1,6 +1,7 @@
-const router = require("express").Router();
-const postsController = require("../../controllers/postsController");
+const { validateToken } = require('../../controllers/external');
 
-router.route("/").post(postsController.validateToken);
+const router = require('express').Router();
+
+router.route('/').post(validateToken);
 
 module.exports = router;
