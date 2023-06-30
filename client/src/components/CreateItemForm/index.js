@@ -6,23 +6,35 @@ import './style.css';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { DEV_SITE_KEY } from '../../constants';
 
+const categoryOptions = [
+  'BICYCLE',
+  'CHAIR',
+  'COMPUTER',
+  'DESK',
+  'LAMP',
+  'SPEAKER',
+  'TABLE',
+  'WHITEBOARD',
+  'OTHER',
+];
+
 function CreateItemForm() {
-  const [state, dispatch] = useStoreContext();
+  const [, dispatch] = useStoreContext();
   const itemNumRef = useRef();
   const itemNameRef = useRef();
-  const catRef = useRef();
+  const itemCategoryRef = useRef();
   const captchaRef = useRef(null);
   const [showWarning, setShowWarning] = useState(false);
   const SITE_KEY = process.env.REACT_APP_RECAPTCHA_SITE_KEY || DEV_SITE_KEY;
 
-  const updateInventory = async () => {
-    const itemNum = itemNumRef.current.value;
+  const refs = [itemNameRef, itemNumRef, itemCategoryRef];
 
+  const updateInventory = async () => {
     try {
       const result = await API.saveItem({
-        itemNumber: itemNum,
+        itemNumber: itemNumRef.current.value,
         itemName: itemNameRef.current.value,
-        category: catRef.current.value,
+        category: itemCategoryRef.current.value,
         qty: 0,
       });
 
@@ -34,7 +46,7 @@ function CreateItemForm() {
       await API.saveBinQuantity({
         warehouseCode: 'CA',
         bin: 'NA',
-        itemNumber: itemNum,
+        itemNumber: itemNumRef.current.value,
         binQty: 0,
         modifiedDate: Date.now(),
       });
@@ -42,11 +54,21 @@ function CreateItemForm() {
       const errString = err.toString();
 
       if (errString.includes('500')) {
-        alert('Error occurred: ' + itemNum + ' already exists');
+        alert(
+          'Error occurred: ' + itemNumRef.current.value + ' already exists'
+        );
       } else {
         alert('Error occurred: ' + err.message);
       }
     }
+  };
+
+  const resetRefs = (refs) => {
+    for (let ref of refs) {
+      ref.current.value = '';
+    }
+
+    captchaRef.current.reset();
   };
 
   const handleSubmit = async (e) => {
@@ -55,21 +77,16 @@ function CreateItemForm() {
     dispatch({ type: LOADING });
 
     const token = captchaRef.current.getValue();
-    captchaRef.current.reset();
-
     const response = await API.validateToken(token);
     const { recaptchaValidated } = response.data;
 
     if (recaptchaValidated) {
-      setShowWarning(false);
       await updateInventory();
+      setShowWarning(false);
+      resetRefs(refs);
     } else {
       setShowWarning(true);
     }
-
-    itemNumRef.current.value = '';
-    itemNameRef.current.value = '';
-    catRef.current.value = '';
   };
 
   return (
@@ -88,26 +105,25 @@ function CreateItemForm() {
         />
         <select
           className="form-control mb-5"
-          ref={catRef}
+          ref={itemCategoryRef}
           placeholder="Category"
         >
-          <option>BICYCLE</option>
-          <option>CHAIR</option>
-          <option>COMPUTER</option>
-          <option>DESK</option>
-          <option>LAMP</option>
-          <option>SPEAKER</option>
-          <option>TABLE</option>
-          <option>WHITEBOARD</option>
-          <option>OTHER</option>
+          {categoryOptions.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
         </select>
+
         {showWarning && (
           <p className="warning">
             reCAPTCHA token is not validated. Please check the box and try
             again.
           </p>
         )}
+
         <ReCAPTCHA sitekey={SITE_KEY} ref={captchaRef} className="recaptcha" />
+
         <button className="btn btn-success mt-3 mb-5" type="submit">
           Insert
         </button>
