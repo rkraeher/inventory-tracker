@@ -1,121 +1,119 @@
 import axios from 'axios';
 
+const apiEndpoints = {
+  posts: '/api/posts',
+  layouts: '/api/layout',
+  bins: '/api/bin',
+  items: '/api/items',
+  warehouses: '/api/warehouse',
+  inventories: '/api/inventory',
+  binQuantities: '/api/binQty',
+  recaptcha: '/api/recaptcha',
+};
+
 export default {
-  // Gets all posts
-  getPosts: function () {
-    return axios.get('/api/posts');
+  // Posts
+  getPosts() {
+    return axios.get(apiEndpoints.posts);
   },
-  // Gets the post with the given id
-  getPost: function (id) {
-    return axios.get('/api/posts/' + id);
+  getPost(id) {
+    return axios.get(`${apiEndpoints.posts}/${id}`);
   },
-  // Deletes the post with the given id
-  deletePost: function (id) {
-    return axios.delete('/api/posts/' + id);
+  deletePost(id) {
+    return axios.delete(`${apiEndpoints.posts}/${id}`);
   },
-  // Saves a post to the database
-  savePost: function (postData) {
-    return axios.post('/api/posts', postData);
+  savePost(postData) {
+    return axios.post(apiEndpoints.posts, postData);
   },
-  // Gets all layout
-  getLayouts: function () {
-    return axios.get('/api/layout');
+
+  // Layouts
+  getLayouts() {
+    return axios.get(apiEndpoints.layouts);
   },
-  // Gets all bin
-  getBins: function () {
-    return axios.get('/api/bin');
+  getLayout(id) {
+    return axios.get(`${apiEndpoints.layouts}/${id}`);
   },
-  // Gets the layout with the given id
-  getLayout: function (id) {
-    return axios.get('/api/layout/' + id);
+  deleteLayout(id) {
+    return axios.delete(`${apiEndpoints.layouts}/${id}`);
   },
-  // Deletes the layout with the given id
-  deleteLayout: function (id) {
-    return axios.delete('/api/layout/' + id);
+  saveLayout(postData) {
+    return axios.post(apiEndpoints.layouts, postData);
   },
-  // Saves a layout to the database
-  saveLayout: function (postData) {
-    return axios.post('/api/layout', postData);
+
+  // Bins
+  getBins() {
+    return axios.get(apiEndpoints.bins);
   },
-  // Gets all items
-  getItems: function () {
-    return axios.get('/api/items');
+
+  // Items
+  getItems() {
+    return axios.get(apiEndpoints.items);
   },
-  // Gets the item with the given id
-  getItem: function (id) {
-    return axios.get('/api/items/' + id);
+  getItem(id) {
+    return axios.get(`${apiEndpoints.items}/${id}`);
   },
-  // Deletes the item with the given id
-  deleteItem: function (id) {
-    return axios.delete('/api/items/' + id);
+  deleteItem(id) {
+    return axios.delete(`${apiEndpoints.items}/${id}`);
   },
-  // Saves a item to the database
-  saveItem: function (postData) {
-    return axios.post('/api/items', postData);
+  saveItem(postData) {
+    return axios.post(apiEndpoints.items, postData);
   },
-  // Update item
-  updateItem: function (id, postData) {
-    return axios.put('/api/items/' + id, postData);
+  updateItem(id, postData) {
+    return axios.put(`${apiEndpoints.items}/${id}`, postData);
   },
-  // Gets all items
-  getWarehouses: function () {
-    return axios.get('/api/warehouse');
+
+  // Warehouses
+  getWarehouses() {
+    return axios.get(apiEndpoints.warehouses);
   },
-  // Gets the item with the given id
-  getWarehouse: function (id) {
-    return axios.get('/api/warehouse/' + id);
+  getWarehouse(id) {
+    return axios.get(`${apiEndpoints.warehouses}/${id}`);
   },
-  // Deletes the item with the given id
-  deleteWarehouse: function (id) {
-    return axios.delete('/api/warehouse/' + id);
+  deleteWarehouse(id) {
+    return axios.delete(`${apiEndpoints.warehouses}/${id}`);
   },
-  // Saves a item to the database
-  saveWarehouse: function (postData) {
-    return axios.post('/api/warehouse', postData);
+  saveWarehouse(postData) {
+    return axios.post(apiEndpoints.warehouses, postData);
   },
-  // Gets all items
-  getInventories: function () {
-    return axios.get('/api/inventory');
+
+  // Inventories
+  getInventories() {
+    return axios.get(apiEndpoints.inventories);
   },
-  getInventoryId: function () {
-    return axios.get('/api/inventoryid');
+  getInventoryId() {
+    return axios.get(`${apiEndpoints.inventories}id`);
   },
-  // Gets the item with the given id
-  getInventory: function (id) {
-    return axios.get('/api/inventory/' + id);
+  getInventory(id) {
+    return axios.get(`${apiEndpoints.inventories}/${id}`);
   },
-  // Deletes the item with the given id
-  deleteInventory: function (id) {
-    return axios.delete('/api/inventory/' + id);
+  deleteInventory(id) {
+    return axios.delete(`${apiEndpoints.inventories}/${id}`);
   },
-  // Saves a item to the database
-  saveInventory: function (postData) {
-    return axios.post('/api/inventory', postData);
+  saveInventory(postData) {
+    return axios.post(apiEndpoints.inventories, postData);
   },
-  // Gets all items
-  getBinQuantities: function () {
-    return axios.get('/api/binQty');
+
+  // Bin Quantities
+  getBinQuantities() {
+    return axios.get(apiEndpoints.binQuantities);
   },
-  // Gets the item with the given id
-  getBinQuantity: function (id) {
-    return axios.get('/api/binQty/' + id);
+  getBinQuantity(id) {
+    return axios.get(`${apiEndpoints.binQuantities}/${id}`);
   },
-  // Deletes the item with the given id
-  deleteBinQuantity: function (id) {
-    return axios.delete('/api/binQty/' + id);
+  deleteBinQuantity(id) {
+    return axios.delete(`${apiEndpoints.binQuantities}/${id}`);
   },
-  // Saves a item to the database
-  saveBinQuantity: function (postData) {
-    return axios.post('/api/binQty', postData);
+  saveBinQuantity(postData) {
+    return axios.post(apiEndpoints.binQuantities, postData);
   },
-  updateBinQuantity: function (id, postData) {
-    return axios.put('/api/binQty/' + id, postData);
+  updateBinQuantity(id, postData) {
+    return axios.put(`${apiEndpoints.binQuantities}/${id}`, postData);
   },
-  validateToken: async (token) => {
+
+  // Recaptcha
+  async validateToken(token) {
     try {
-      const response = await axios.post('/api/recaptcha', {
-        token,
-      });
+      const response = await axios.post(apiEndpoints.recaptcha, { token });
       return response;
     } catch (error) {
       console.error(error);
