@@ -109,7 +109,7 @@ function CreateItemForm() {
           <option>WHITEBOARD</option>
           <option>OTHER</option>
         </select>
-        <ReCAPTCHA sitekey={SITE_KEY} ref={captchaRef} />
+        <ReCAPTCHA sitekey={SITE_KEY} ref={captchaRef} className="recaptcha" />
         <button className="btn btn-success mt-3 mb-5" type="submit">
           Insert
         </button>
