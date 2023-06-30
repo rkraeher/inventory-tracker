@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { useStoreContext } from '../../utils/GlobalState';
 import { ADD_ITEM, LOADING } from '../../utils/actions';
 import API from '../../utils/API';
@@ -12,6 +12,7 @@ function CreateItemForm() {
   const itemNameRef = useRef();
   const catRef = useRef();
   const captchaRef = useRef(null);
+  const [showWarning, setShowWarning] = useState(false);
   const SITE_KEY = process.env.REACT_APP_RECAPTCHA_SITE_KEY || DEV_SITE_KEY;
 
   const updateInventory = () => {
@@ -67,12 +68,12 @@ function CreateItemForm() {
     const { recaptchaValidated } = response.data;
 
     if (recaptchaValidated) {
+      setShowWarning(false);
       updateInventory();
     }
 
     if (recaptchaValidated === false) {
-      // we need to display some warning in the UI
-      console.log('token is NOT validated');
+      setShowWarning(true);
     }
 
     itemNumRef.current.value = '';
@@ -109,6 +110,12 @@ function CreateItemForm() {
           <option>WHITEBOARD</option>
           <option>OTHER</option>
         </select>
+        {showWarning && (
+          <p className="warning">
+            reCAPTCHA token is not validated. Please check the box and try
+            again.
+          </p>
+        )}
         <ReCAPTCHA sitekey={SITE_KEY} ref={captchaRef} className="recaptcha" />
         <button className="btn btn-success mt-3 mb-5" type="submit">
           Insert

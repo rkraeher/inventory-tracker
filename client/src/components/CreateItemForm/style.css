@@ -20,3 +20,10 @@
 .recaptcha {
   margin-bottom: 16px;
 }
+
+.warning {
+  color: red;
+  margin-left: 48px;
+  margin-right: 48px;
+  margin-bottom: 16px;
+}
